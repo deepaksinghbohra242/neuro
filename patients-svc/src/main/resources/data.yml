@@ -1,0 +1,111 @@
+patients:
+  - id: 1
+    user_id: 101
+    first_name: "John"
+    last_name: "Doe"
+    email: "john.doe@example.com"
+    phone_number: "9999999991"
+    date_of_birth: 1985-05-10
+    occupation: "Software Engineer"
+    nationality: "Indian"
+    ppsn: "PPSN101"
+    address_line1: "123 Main Street"
+    city: "Mumbai"
+    state: "Maharashtra"
+    country: "India"
+    zip_code: "400001"
+    status: "UNARCHIVED"
+    created_at: 2025-10-20T09:00:00
+    created_by: "system"
+
+  - id: 2
+    user_id: 102
+    first_name: "Jane"
+    last_name: "Smith"
+    email: "jane.smith@example.com"
+    phone_number: "9999999992"
+    date_of_birth: 1990-03-15
+    occupation: "Teacher"
+    nationality: "Indian"
+    ppsn: "PPSN102"
+    address_line1: "45 Park Avenue"
+    city: "Pune"
+    state: "Maharashtra"
+    country: "India"
+    zip_code: "411001"
+    status: "UNARCHIVED"
+    created_at: 2025-10-20T09:15:00
+    created_by: "system"
+
+family_profiles:
+  - id: 1
+    patient_id: 1
+    first_name: "Mary"
+    last_name: "Doe"
+    relation: "Mother"
+    age: 60
+    email: "mary.doe@example.com"
+
+  - id: 2
+    patient_id: 1
+    first_name: "David"
+    last_name: "Doe"
+    relation: "Father"
+    age: 62
+    email: "david.doe@example.com"
+
+gp_details:
+  - id: 1
+    profile_id: 1
+    doctor_name: "Dr. A. Sharma"
+    clinic_name: "City Clinic"
+    phone_number: "9876543210"
+    email: "asharma@cityclinic.com"
+    licence_number: "LIC101"
+    patient_since: 2015-01-01
+    address: "12 Clinic Street"
+    city: "Mumbai"
+    state: "Maharashtra"
+    country: "India"
+    zip_code: "400001"
+    created_at: 2025-10-20T09:30:00
+    created_by: "system"
+
+medical_details:
+  - id: 1
+    profile_id: 1
+    blood_group: "A+"
+    crey_o_s_score: 85
+    physically_challenged: false
+    weight: 75.5
+    blood_pressure: "120/80"
+    heart_rate: 72
+    other_medical_condition: "None"
+    allergies: "Pollen"
+    smoking: 0
+    drinking: 1
+    created_at: 2025-10-20T09:45:00
+    created_by: "system"
+
+treatments:
+  - id: 1
+    treatment_name: "Physiotherapy"
+    link: "https://neuromed.com/treatments/physiotherapy"
+    created_at: 2025-10-20T10:00:00
+    created_by: "system"
+
+requests:
+  - id: 1
+    transfer_id: "REQ101"
+    date: 2025-10-22T10:00:00
+    consultant_id: 201
+    request_type: "APPOINTMENT"
+    transferred_to: "Dr. Smith"
+    description: "Request for follow-up consultation"
+    doctor_name: "Dr. Smith"
+    patient_id: 1
+    status: "PENDING"
+    reason: "Follow-up needed"
+    duration: 30
+    created_at: 2025-10-20T10:15:00
+    created_by: "system"

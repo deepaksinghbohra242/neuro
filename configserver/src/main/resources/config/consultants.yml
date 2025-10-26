@@ -1,0 +1,12 @@
+build:
+  version: "1.0"
+
+appointments:
+  message: "For any Consultants-related queries, please reach out using the details below."
+  contactDetails:
+    name: "Alex Turner - Consultants Manager"
+    email: "alex.turner@hospital.com"
+    phone: "(555) 123-4567"
+  supportContacts:
+    - "Consultants Help Desk: (555) 222-3333"
+    - "Dr. Emily: (555) 444-5555"

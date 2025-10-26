@@ -1,0 +1,22 @@
+build:
+  version: "2.0"
+
+
+appointments:
+  message: "You can reach NeuroMed Clinic at any of our locations below:"
+  contact-details:
+    DUBLIN: |
+      phone: (01) 965 3294
+      email: info@neuromedclinic.com
+      address: 15 A Northbrook Road, Ranelagh, D06 CH04, Dublin
+    GALWAY: |
+      phone: (01) 965 3294
+      email: neuromedclinic@protonmail.com
+      address: Unit 17 Sandyford Business Centre, Bohermore
+    EDMONTON: |
+      phone: 001 (587) 860 1880
+      email: claire@neuromedclinic.com
+      address: 2532 Ellwood Drive SW, Edmonton, AB. T6X0A9
+  on-call-support:
+    - "24/7 emergency consultation available"
+    - "For urgent cases, please contact your nearest clinic"

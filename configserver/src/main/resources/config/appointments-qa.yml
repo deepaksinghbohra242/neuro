@@ -1,0 +1,12 @@
+build:
+  version: "3.0"
+
+appointments:
+  message: "For any appointment-related queries, please reach out using the details below."
+  contactDetails:
+    name: "Alex Turner - Appointments Manager"
+    email: "alex.turner@hospital.com"
+    phone: "(555) 123-4567"
+  supportContacts:
+    - "Appointments Help Desk: (555) 222-3333"
+    - "Dr. Emily: (555) 444-5555"

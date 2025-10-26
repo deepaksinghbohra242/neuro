@@ -1,0 +1,53 @@
+global:
+  scrape_interval:     5s # Set the scrape interval to every 5 seconds.
+  evaluation_interval: 5s # Evaluate rules every 5 seconds.
+
+scrape_configs:
+  - job_name: 'eurekaserver'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'eurekaserver:8070' ]
+  - job_name: 'appointments'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'appointments:8076' ]
+  - job_name: 'patients'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'patients:8090' ]
+  - job_name: 'consultants'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'consultants:8082' ]
+  - job_name: 'reports'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'reports:8086' ]
+  - job_name: 'pharmarcy'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'pharmarcy:8085' ]
+  - job_name: 'billing'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'billing:8083' ]
+  - job_name: 'documents'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'documents:8088' ]
+  - job_name: 'support'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'support:8089' ]
+  - job_name: 'notifications'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'notifications:8084' ]
+  - job_name: 'gatewayserver'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'gatewayserver:8080' ]
+  - job_name: 'auth'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'auth:8081' ]
