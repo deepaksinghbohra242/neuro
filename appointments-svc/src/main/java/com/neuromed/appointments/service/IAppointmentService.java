@@ -50,4 +50,6 @@ public interface IAppointmentService {
      */
     AppointmentDetailsDTO fetchAppointmentDetails(Long appointmentId, String correlationId);
     List<AppointmentDTO> listAppointments(String correlationId);
+    List<AppointmentDTO> listAppointmentsByConsultantId(String correlationId , Long consultantId);
+
 }

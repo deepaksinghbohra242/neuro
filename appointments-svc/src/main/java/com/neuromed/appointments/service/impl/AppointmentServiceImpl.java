@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AppointmentServiceImpl implements IAppointmentService {
 
+
     private AppointmentRepository appointmentRepository;
     private PatientsFeignClient patientsFeignClient;
     private ConsultantsFeignClient consultantsFeignClient;
@@ -78,11 +79,11 @@ public class AppointmentServiceImpl implements IAppointmentService {
         detailsDTO.setConsultantId(appointment.getConsultantId().toString());
 
         ResponseEntity<PatientDetailsDTO> patientResponse = patientsFeignClient.fetchPatientDetails(
-                correlationId, appointment.getPatientId().toString());
+                correlationId, appointment.getPatientId());
         if (patientResponse != null && patientResponse.getBody() != null) {
             detailsDTO.setPatientDetails(patientResponse.getBody());
-        }
 
+        }
         return detailsDTO;
     }
     @Override
@@ -100,6 +101,24 @@ public class AppointmentServiceImpl implements IAppointmentService {
             return dto;
         }).toList();
     }
+
+    @Override
+    public List<AppointmentDTO> listAppointmentsByConsultantId(String correlationId, Long consultantId) {
+        List<Appointment> appointments = appointmentRepository.findByConsultantId(consultantId);
+        return appointments.stream().map(appointment -> {
+            AppointmentDTO dto = AppointmentMapper.mapToAppointmentDto(appointment, new AppointmentDTO());
+
+            ResponseEntity<PatientDetailsDTO> patientsResponse = patientsFeignClient.fetchPatientDetails(
+                    correlationId, appointment.getPatientId());
+            PatientDetailsDTO patient = patientsResponse.getBody();
+            if (patient != null) {
+                dto.setPatientUserModel(patient.getUserModel());
+            }
+            return dto;
+        }).toList();
+
+    }
+
 
     private long getDefaultDuration(String visitType) {
         return switch (visitType != null ? visitType : "") {

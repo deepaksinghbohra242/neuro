@@ -92,11 +92,12 @@ public class PatientServiceImpl implements IPatientService {
         logger.info("fetchPatient called for patientId={} correlationId={}", patientId, correlationId);
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient", "id", String.valueOf(patientId)));
-        ResponseEntity<UserModel> userModelResponseEntity = userFeignClient.fetchUserDetails(correlationId, patient.getUserId().toString());
-        logger.info("fetchPatient fetched patientId={} user={}", patientId, userModelResponseEntity.getBody() != null ? userModelResponseEntity.getBody().getId() : "null");
-        PatientDetailsDTO patientDetailsDTO = getPatientDetailsDTO(patient, userModelResponseEntity);
-        logger.debug("fetchPatient returning details for patientId={}", patientId);
-        return patientDetailsDTO;
+
+       PatientDetailsDTO patientDetailsDTO = new PatientDetailsDTO();
+        ResponseEntity<UserModel> userModel = userFeignClient.fetchUserDetails(correlationId, patient.getUserId().toString());
+       patientDetailsDTO.setUserModel(userModel.getBody());
+       return patientDetailsDTO;
+
     }
 
     private static PatientDetailsDTO getPatientDetailsDTO(Patient patient, ResponseEntity<UserModel> userModelResponseEntity) {

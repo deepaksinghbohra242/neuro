@@ -26,6 +26,8 @@ public class AppointmentDTO {
     private Long billingId;
     private Integer duration;
     private UserModel userModel;
+    private UserModel patientUserModel;
+
 
     public Integer getDuration() {
         if (timeSlot != null && endTime != null) {

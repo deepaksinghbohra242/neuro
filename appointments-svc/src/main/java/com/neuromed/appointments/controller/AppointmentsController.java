@@ -153,4 +153,11 @@ public class AppointmentsController {
         List<AppointmentDTO> list = appointmentService.listAppointments(correlationId);
         return ResponseEntity.ok(list);
         }
+
+    @Operation(summary = "List by all Appointments", description = "Fetch all appointment records")
+    @GetMapping("/listByConsultantId")
+    public ResponseEntity<List<AppointmentDTO>> listAppointmentsByConsultantId(@RequestHeader("neuromed-correlation-id") String correlationId ,@RequestParam("consultantId") Long consultantId) {
+        List<AppointmentDTO> list = appointmentService.listAppointmentsByConsultantId(correlationId , consultantId );
+        return ResponseEntity.ok(list);
+    }
 }
