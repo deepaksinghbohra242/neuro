@@ -10,6 +10,13 @@ import lombok.Data;
 )
 public class AppointmentDetailsDTO {
 
+
+    @Schema(description = "Patient Full Name")
+    private String patientName;
+
+    @Schema(description = "Consultant Full Name")
+    private String consultantName;
+
     @Schema(
             description = "ID of the appointment",
             example = "123"

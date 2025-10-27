@@ -8,6 +8,7 @@ import com.neuromed.appointments.repository.AppointmentRepository;
 import com.neuromed.appointments.service.IAppointmentService;
 import com.neuromed.appointments.service.client.ConsultantsFeignClient;
 import com.neuromed.appointments.service.client.PatientsFeignClient;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -81,8 +82,24 @@ public class AppointmentServiceImpl implements IAppointmentService {
         ResponseEntity<PatientDetailsDTO> patientResponse = patientsFeignClient.fetchPatientDetails(
                 correlationId, appointment.getPatientId());
         if (patientResponse != null && patientResponse.getBody() != null) {
-            detailsDTO.setPatientDetails(patientResponse.getBody());
+            PatientDetailsDTO patient = patientResponse.getBody();
+            detailsDTO.setPatientDetails(patient);
 
+            if(patient.getUserModel() !=null){
+                detailsDTO.setPatientName(patient.getUserModel().getFirstName() + " " +
+                        patient.getUserModel().getLastName());
+            }
+        }
+        ResponseEntity<ConsultantDetailsDto> consultantResponse =
+                consultantsFeignClient.fetchConsultantDetails(correlationId, appointment.getConsultantId());
+        if (consultantResponse != null && consultantResponse.getBody() != null) {
+            ConsultantDetailsDto consultant = consultantResponse.getBody();
+            detailsDTO.setConsultantName(consultant.toString());
+
+            if (consultant.getUserModel() != null) {
+                detailsDTO.setConsultantName(consultant.getUserModel().getFirstName() + " " +
+                        consultant.getUserModel().getLastName());
+            }
         }
         return detailsDTO;
     }
