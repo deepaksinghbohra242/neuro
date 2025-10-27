@@ -118,7 +118,7 @@ public class AppointmentsController {
     @GetMapping("/fetchAppointmentDetails")
     public ResponseEntity<AppointmentDetailsDTO> fetchAppointmentDetails(
             @RequestHeader("neuromed-correlation-id") String correlationId,
-            @RequestParam Long appointmentId) {
+            @RequestParam("appointmentId") Long appointmentId) {
         AppointmentDetailsDTO detailsDTO = appointmentService.fetchAppointmentDetails(appointmentId, correlationId);
         return ResponseEntity.ok(detailsDTO);
     }

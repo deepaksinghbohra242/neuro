@@ -71,6 +71,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         return true;
     }
 
+
     public AppointmentDetailsDTO fetchAppointmentDetails(Long appointmentId, String correlationId) {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment", "id", appointmentId.toString()));
@@ -79,13 +80,13 @@ public class AppointmentServiceImpl implements IAppointmentService {
         detailsDTO.setAppointmentId(appointment.getId().toString());
         detailsDTO.setConsultantId(appointment.getConsultantId().toString());
 
-        ResponseEntity<PatientDetailsDTO> patientResponse = patientsFeignClient.fetchPatientDetails(
-                correlationId, appointment.getPatientId());
+        ResponseEntity<PatientDetailsDTO> patientResponse =
+                patientsFeignClient.fetchPatientDetails(correlationId, appointment.getPatientId());
         if (patientResponse != null && patientResponse.getBody() != null) {
             PatientDetailsDTO patient = patientResponse.getBody();
             detailsDTO.setPatientDetails(patient);
 
-            if(patient.getUserModel() !=null){
+            if (patient.getUserModel() != null) {
                 detailsDTO.setPatientName(patient.getUserModel().getFirstName() + " " +
                         patient.getUserModel().getLastName());
             }
@@ -94,7 +95,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
                 consultantsFeignClient.fetchConsultantDetails(correlationId, appointment.getConsultantId());
         if (consultantResponse != null && consultantResponse.getBody() != null) {
             ConsultantDetailsDto consultant = consultantResponse.getBody();
-            detailsDTO.setConsultantName(consultant.toString());
 
             if (consultant.getUserModel() != null) {
                 detailsDTO.setConsultantName(consultant.getUserModel().getFirstName() + " " +
@@ -103,6 +103,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         }
         return detailsDTO;
     }
+
     @Override
     public List<AppointmentDTO> listAppointments(String correlationId) {
         List<Appointment> appointments = appointmentRepository.findAll();
