@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ChevronLeft from "../assets/icons/arrow-chevron-left.svg";
 import ChevronRight from "../assets/icons/arrow-chevron-right.svg";
-import plusIcon from "../assets/icons/plus.svg";
+import plusIcon from "../assets/icons/Plus.svg";
 import chatIcon from "../assets/icons/chat-message.svg";
 
 const ConsultationHeader = () => {
@@ -14,8 +14,9 @@ const ConsultationHeader = () => {
   >(undefined);
 
   const location = useLocation();
-  const customPurple = "rgb(109, 83, 178)";
+  const navigate = useNavigate()
 
+  const customPurple = "rgb(109, 83, 178)";
   const pathname = location.pathname;
   const parts = pathname.split("/").filter((part) => part.length > 0);
 
@@ -51,6 +52,13 @@ const ConsultationHeader = () => {
     }
   }, [prescriptionId]);
 
+  const handleItemClick = (requestUrl: string) => {
+    // Navigates to a specific request detail page, e.g., /transfers/RQ356356
+    console.log(`Navigating to review request: ${requestUrl}`);
+    // Example navigation path (adjust as needed for your routing):
+    navigate(`${requestUrl}`) 
+  };
+
   return (
     <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-100 shadow-sm">
       <div className="flex items-center space-x-4">
@@ -58,7 +66,7 @@ const ConsultationHeader = () => {
           className="p-3 text-gray-500 duration-150 ease-in-out bg-gray-50 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:bg-gray-100"
           style={{ width: "40px", height: "40px" }} // Ensure it's a square button
         >
-          <img src={ChevronLeft} alt="user avatar" className="w-4 h-4" />
+          <img src={ChevronLeft} alt="user avatar" className="w-4 h-4" onClick={() => handleItemClick('/patients/')}  />
         </button>
 
         <div className="flex items-center text-sm font-medium">

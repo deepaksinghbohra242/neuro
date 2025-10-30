@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../common/Table";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
-import actionsIcon from "../assets/icons/Actions.svg";
-import deleteIcon from "../assets/icons/Delete.svg";
 
 interface PatientsData {
   id: number;
@@ -28,15 +26,17 @@ interface PatientsData {
   action: string;
 }
 
-const PatientDashboard = () => {
+function Patients() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // 🧠 Determine initial tab based on route
   const isArchivePage = location.pathname.includes("/patients/archive");
   const [activeTab, setActiveTab] = useState<"Active" | "Archive">(
     isArchivePage ? "Archive" : "Active"
   );
 
+  // 🧭 Update tab if route changes
   useEffect(() => {
     if (location.pathname.includes("/patients/archive")) {
       setActiveTab("Archive");
@@ -50,7 +50,7 @@ const PatientDashboard = () => {
     navigate(tab === "Archive" ? "/patients/archive" : "/patients");
   };
 
-  const PatientData: PatientsData[] = [
+  const PatientsData: PatientsData[] = [
     {
       "id": 1,
       "userId": "PA356356",
@@ -230,10 +230,10 @@ const PatientDashboard = () => {
   ]
 
   const handleItemClick = (userId: string) => {
-    navigate(`/patients/patient_details/${userId}`);
+    navigate(`/patient/${userId}`);
   };
 
-  const filteredData = PatientData.filter((item) =>
+  const filteredData = PatientsData.filter((item) =>
     activeTab === "Active" ? item.status === "Active" : item.status === "Inactive"
   );
 
@@ -243,7 +243,7 @@ const PatientDashboard = () => {
     {
       key: "firstName" as keyof PatientsData,
       header: "PATIENT NAME",
-      render: (_: string, row: PatientsData) => `${row.firstName} ${row.lastName}`,
+      render: (value: string, row: PatientsData) => `${row.firstName} ${row.lastName}`,
     },
     { key: "lastVisit" as keyof PatientsData, header: "LAST VISIT" },
     { key: "totalVisits" as keyof PatientsData, header: "TOTAL VISITS" },
@@ -256,20 +256,12 @@ const PatientDashboard = () => {
       key: "action" as keyof PatientsData,
       header: "",
       render: (_: string, row: PatientsData) => (
-        <div className="flex space-x-2">
-          <button
-            className="text-gray-400 hover:text-purple-600 p-1 rounded-full hover:bg-purple-50 transition-colors"
-            onClick={() => handleItemClick(row.userId)}
-          >
-            <img src={actionsIcon} alt="View Details" className="h-7 w-7" />
-          </button>
-          <button
-            className="text-gray-400 hover:text-red-600 p-1 rounded-full hover:bg-red-50 transition-colors"
-            onClick={() => console.log("Delete", row.id)}
-          >
-            <img src={deleteIcon} alt="Delete" className="h-7 w-7" />
-          </button>
-        </div>
+        <button
+          onClick={() => handleItemClick(row.userId)}
+          className="text-indigo-700 border border-indigo-200 rounded-md px-3 py-1.5 bg-indigo-50 font-medium hover:bg-indigo-100 transition-colors"
+        >
+          View
+        </button>
       ),
     },
   ];
@@ -286,9 +278,10 @@ const PatientDashboard = () => {
           Total Patients ({filteredData.length.toString().padStart(2, "0")})
         </div>
 
-        {/* Header Controls */}
+        {/* Header Right Controls */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-          {/* Search */}
+
+          {/* Search Bar */}
           <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-3 py-2 bg-white w-full sm:w-[320px] md:w-[380px] lg:w-[420px]">
             <FiSearch className="text-gray-500 text-lg shrink-0" />
             <input
@@ -304,6 +297,6 @@ const PatientDashboard = () => {
       <Table data={filteredData} columns={columns} counts={false} />
     </div>
   );
-};
+}
 
-export default PatientDashboard;
+export default Patients;

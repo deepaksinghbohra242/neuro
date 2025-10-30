@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import notificationIcon from "../assets/icons/notification.svg";
 import avatarIcon from "../assets/icons/Avatar.svg";
 import arrowIcon from "../assets/icons/arrow.svg";
@@ -183,7 +183,6 @@ function NavHeader({
 export default function Header(props: HeaderProps) {
   // These hooks now rely on an external <BrowserRouter> wrapper
   const location = useLocation();
-  console.log(useParams(), '******location *******88888888*')
   // Check if the path includes /patients/patient_details/
   const isPatientDetailsView = location.pathname.includes("/patient_details/");
 

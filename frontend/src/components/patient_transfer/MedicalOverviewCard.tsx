@@ -1,24 +1,46 @@
-import React from 'react';
+import { MdOutlineEdit } from "react-icons/md";
 
 const MedicalOverviewCard = () => {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 border border-gray-100">
+    <div className="bg-gray-50 rounded-lg shadow-sm p-4 sm:p-6 border border-gray-100">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold text-gray-900">
+        <h3 className="border-l-4 pl-3 text-lg font-bold text-gray-900" style={{ borderColor: "#5B3CA1" }}>
           MEDICAL OVERVIEW <span className="text-gray-500 text-sm font-normal">・ Last Updated: 12 Dec, 2023</span>
         </h3>
-        <button className="flex items-center text-indigo-600 text-sm font-medium hover:text-indigo-700 transition-colors duration-200">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-          </svg>
+        <button className="flex items-center text-indigo-400 text-sm font-medium hover:text-indigo-700 transition-colors duration-200 border border-gray-300 px-3 py-1 rounded-lg gap-1 bg-white">
+          <MdOutlineEdit/>
           Edit
         </button>
       </div>
 
       {/* Metric Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        {/* CREYOS Score */}
+        <div className="p-4 bg-white rounded-2xl border border-gray-200">
+          <div className="flex justify-between items-center mb-2">
+            <p className="text-sm font-medium text-gray-700">CREYOS SCORE</p>
+            <span className="text-green-500 font-bold text-xs">●</span> {/* Using a circle for neutral/good */}
+          </div>
+          {/* Placeholder SVG for CREYOS Score Chart */}
+          <svg viewBox="0 0 200 60" className="w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 40 C 20 50, 40 30, 60 40 C 80 55, 100 35, 120 45 C 140 30, 160 50, 180 40" stroke="#34D399" strokeWidth="2" fill="none"/>
+            <path d="M0 45 C 20 55, 40 35, 60 45 C 80 60, 100 40, 120 50 C 140 35, 160 55, 180 45" stroke="#6EE7B7" strokeWidth="2" fill="none" opacity="0.6"/>
+            <text x="0" y="58" fontSize="6" fill="#6B7280">08</text>
+            <text x="30" y="58" fontSize="6" fill="#6B7280">09</text>
+            <text x="60" y="58" fontSize="6" fill="#6B7280">10</text>
+            <text x="90" y="58" fontSize="6" fill="#6B7280">11</text>
+            <text x="120" y="58" fontSize="6" fill="#6B7280">12</text>
+            <text x="150" y="58" fontSize="6" fill="#6B7280">Jan</text>
+          </svg>
+          <div className="flex items-baseline mt-2">
+            <span className="text-2xl font-bold text-gray-900">78.9</span>
+            <span className="text-sm text-gray-500 ml-1">Percentile</span>
+            <span className="ml-auto text-green-600 font-medium text-sm">GOOD</span>
+          </div>
+        </div>
+
         {/* Blood Pressure */}
-        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="p-4 bg-white rounded-2xl border border-gray-200">
           <div className="flex justify-between items-center mb-2">
             <p className="text-sm font-medium text-gray-700">BLOOD PRESSURE</p>
             <span className="text-red-500 font-bold text-xs">▲</span>
@@ -42,7 +64,7 @@ const MedicalOverviewCard = () => {
         </div>
 
         {/* Heart Rate */}
-        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="p-4 bg-white rounded-2xl border border-gray-200">
           <div className="flex justify-between items-center mb-2">
             <p className="text-sm font-medium text-gray-700">HEART RATE</p>
             <span className="text-orange-500 font-bold text-xs">●</span> {/* Using a circle for neutral/warning */}
@@ -62,30 +84,6 @@ const MedicalOverviewCard = () => {
             <span className="text-2xl font-bold text-gray-900">110</span>
             <span className="text-sm text-gray-500 ml-1">bpm</span>
             <span className="ml-auto text-orange-500 font-medium text-sm">AVERAGE</span>
-          </div>
-        </div>
-
-        {/* CREYOS Score */}
-        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <div className="flex justify-between items-center mb-2">
-            <p className="text-sm font-medium text-gray-700">CREYOS SCORE</p>
-            <span className="text-green-500 font-bold text-xs">●</span> {/* Using a circle for neutral/good */}
-          </div>
-          {/* Placeholder SVG for CREYOS Score Chart */}
-          <svg viewBox="0 0 200 60" className="w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 40 C 20 50, 40 30, 60 40 C 80 55, 100 35, 120 45 C 140 30, 160 50, 180 40" stroke="#34D399" strokeWidth="2" fill="none"/>
-            <path d="M0 45 C 20 55, 40 35, 60 45 C 80 60, 100 40, 120 50 C 140 35, 160 55, 180 45" stroke="#6EE7B7" strokeWidth="2" fill="none" opacity="0.6"/>
-            <text x="0" y="58" fontSize="6" fill="#6B7280">08</text>
-            <text x="30" y="58" fontSize="6" fill="#6B7280">09</text>
-            <text x="60" y="58" fontSize="6" fill="#6B7280">10</text>
-            <text x="90" y="58" fontSize="6" fill="#6B7280">11</text>
-            <text x="120" y="58" fontSize="6" fill="#6B7280">12</text>
-            <text x="150" y="58" fontSize="6" fill="#6B7280">Jan</text>
-          </svg>
-          <div className="flex items-baseline mt-2">
-            <span className="text-2xl font-bold text-gray-900">78.9</span>
-            <span className="text-sm text-gray-500 ml-1">Percentile</span>
-            <span className="ml-auto text-green-600 font-medium text-sm">GOOD</span>
           </div>
         </div>
       </div>

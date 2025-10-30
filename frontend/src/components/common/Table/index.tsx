@@ -78,7 +78,7 @@ function Table<T extends Record<string, any>>({
             {data.length === 0 ? (
               <tr className=""> 
                 <td colSpan={columns.length} className="px-6 py-12">
-                  <div className="flex flex-col items-center justify-center min-h-[400px]"> {/* Use min-height for empty state centering */}
+                  <div className="flex flex-col items-center justify-center min-h-[700px]"> {/* Use min-height for empty state centering */}
                     <img
                       src={emptyTable}
                       alt="empty table"

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Table from "../common/Table/index";
-import actionsIcon from "../assets/icons/Actions.svg";
-import downloadIcon from "../assets/icons/Download.svg";
-import AddNewPrescriptions from "./popUp/AddNewPrescription";
-import ModalWrapper from "../common/Popup/ModalWrapper";
+import Table from "../../common/Table/index";
+import actionsIcon from "../../assets/icons/Actions.svg";
+import downloadIcon from "../../assets/icons/Download.svg";
+import ModalWrapper from "../../common/Popup/ModalWrapper";
 import { useNavigate, useParams } from "react-router-dom";
+import AddNewPrescriptions from "../../prescriptions/popUp/AddNewPrescription";
 
 interface PrescriptionData {
   id: string;
@@ -14,9 +14,23 @@ interface PrescriptionData {
   duration: number;
 }
 
+interface PrescriptionsTableProps {
+  data: PrescriptionData[];
+  counts?: boolean;
+  activeTab?: string;
+  handleTabChange?: (tab: string) => void;
+  currentPatientId?: string;
+}
+
+interface ActionButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  className?: string;
+  isPrimary?: boolean;
+}
+
 console.log("actionsIcon path:", actionsIcon);
-// Define the columns array for the prescription data
-const ActionButton = ({
+const ActionButton: React.FC<ActionButtonProps> = ({
   children,
   className = "",
   isPrimary = false,
@@ -37,16 +51,22 @@ const ActionButton = ({
   </button>
 );
 
-const PrescriptionsTable = ({ data, counts, activeTab, handleTabChange, currentPatientId }) => {
-  // 1. State to control the modal visibility
+const PrescriptionsTable: React.FC<PrescriptionsTableProps> = ({
+  data,
+  counts,
+  activeTab,
+  handleTabChange,
+  currentPatientId,
+}) => {
+
   console.log(useParams(), '******useParams 43***')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const handleSave = (formData, medicines) => {
+  const handleSave = (formData: any, medicines: any) => {
     console.log("Saving Data:", { formData, medicines });
     // API call logic here...
-    closeModal(); // Close the modal upon successful save
+    closeModal();
   };
   const navigate = useNavigate();
 

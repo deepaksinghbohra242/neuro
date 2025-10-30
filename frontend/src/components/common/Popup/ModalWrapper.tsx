@@ -30,7 +30,7 @@ const ModalWrapper = ({ children, onClose }) => {
       onClick={handleBackdropClick}
     >
       {/* Modal content container - ensures content is centered */}
-      <div className="relative w-full max-w-4xl mx-auto my-6">
+      <div className="relative w-full max-w-4xl mx-auto my-6 flex justify-center items-center">
         {/* The children (the form) are rendered here */}
         {children}
       </div>

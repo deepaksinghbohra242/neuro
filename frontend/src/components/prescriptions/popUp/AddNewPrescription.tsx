@@ -302,108 +302,107 @@ const AddNewPrescriptions: React.FC<AddNewPrescriptionsProps> = ({
   };
 
   return (
-    <div className="p-4 sm:p-6 bg-gray-100 flex items-start justify-center">
-      {/* Popup / Modal Container (centered) */}
-      <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
-        {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-900">
-            Add New Prescription
-          </h2>
+    <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
+      {/* Header */}
+      <div className="px-6 py-4 border-b border-gray-200">
+        <h2 className="text-xl font-bold text-gray-900">
+          Add New Prescription
+        </h2>
+      </div>
+
+      {/* Form Body */}
+      <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        {/* Prescription Info Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormInput
+            label="Prescription ID"
+            id="prescriptionId"
+            value={formData.prescriptionId}
+            onChange={handleFormChange}
+            placeholder="e.g., PR826493"
+          />
+          <FormInput
+            label="Date of Prescription"
+            id="dateOfPrescription"
+            value={formData.dateOfPrescription}
+            onChange={handleFormChange}
+            placeholder="DD/MM/YYYY"
+          />
+          <FormInput
+            label="Prescribed By"
+            id="prescribedBy"
+            value={formData.prescribedBy}
+            onChange={handleFormChange}
+            placeholder="e.g., Dr. Jane Doe"
+          />
+          <FormSelect
+            label="Prescription Duration"
+            id="prescriptionDuration"
+            value={formData.prescriptionDuration}
+            onChange={handleFormChange}
+            options={durationOptions}
+            required
+            placeholder="Select duration period"
+          />
         </div>
 
-        {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Prescription Info Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormInput
-              label="Prescription ID"
-              id="prescriptionId"
-              value={formData.prescriptionId}
-              onChange={handleFormChange}
-              placeholder="e.g., PR826493"
+        {/* Medicine Section */}
+        <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
+          {medicines.map((medicine, index) => (
+            <MedicineItem
+              key={index}
+              index={index}
+              medicine={medicine}
+              onChange={handleMedicineChange}
+              onRemove={handleRemoveMedicine}
             />
-            <FormInput
-              label="Date of Prescription"
-              id="dateOfPrescription"
-              value={formData.dateOfPrescription}
-              onChange={handleFormChange}
-              placeholder="DD/MM/YYYY"
-            />
-            <FormInput
-              label="Prescribed By"
-              id="prescribedBy"
-              value={formData.prescribedBy}
-              onChange={handleFormChange}
-              placeholder="e.g., Dr. Jane Doe"
-            />
-            <FormSelect
-              label="Prescription Duration"
-              id="prescriptionDuration"
-              value={formData.prescriptionDuration}
-              onChange={handleFormChange}
-              options={durationOptions}
-              required
-              placeholder="Select duration period"
-            />
-          </div>
+          ))}
 
-          {/* Medicine Section */}
-          <div className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-            {medicines.map((medicine, index) => (
-              <MedicineItem
-                key={index}
-                index={index}
-                medicine={medicine}
-                onChange={handleMedicineChange}
-                onRemove={handleRemoveMedicine}
-              />
-            ))}
-
-            {/* Add Another Medicine Button */}
-            <div className="mt-4">
-              <button
-                type="button"
-                onClick={handleAddMedicine}
-                className="w-full flex items-center justify-center p-3 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg font-medium transition duration-150 ease-in-out"
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
-                </svg>
-                Add Another Medicine
-              </button>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex justify-end space-x-3 pt-4">
+          {/* Add Another Medicine Button */}
+          <div className="mt-4">
             <button
               type="button"
-              onClick={onDiscard}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 font-medium transition duration-150 ease-in-out"
+              onClick={handleAddMedicine}
+              className="w-full flex items-center justify-center p-3 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg font-medium transition duration-150 ease-in-out"
             >
-              Discard
-            </button>
-            <button
-              type="submit"
-              className="px-6 py-2 bg-indigo-600 rounded-lg text-white hover:bg-indigo-700 shadow-md font-medium transition duration-150 ease-in-out"
-            >
-              Save
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                ></path>
+              </svg>
+              Add Another Medicine
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end space-x-3 pt-4">
+          <button
+            type="button"
+            onClick={onDiscard}
+            className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white 
+                       hover:bg-gray-50 font-medium transition duration-150 ease-in-out"
+          >
+            Discard
+          </button>
+          <button
+            type="submit"
+            className="px-6 py-2 bg-[#917BD2] rounded-lg text-white hover:bg-purple-500 
+                       shadow-md font-medium transition duration-150 ease-in-out"
+          >
+            Confirm
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

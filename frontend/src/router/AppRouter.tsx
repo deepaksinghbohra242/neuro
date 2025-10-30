@@ -24,6 +24,10 @@ import RequestReviewPage from '../components/general/RequestReviewPage';
 import PatientDashboard  from '../components/patients/PatientDashboard'
 import PatientDetails from '../components/patients/PatientDetails'
 import PrescriptionPage from "../components/prescriptions/PrescriptionPage";
+import TestPage from "../components/prescriptions/TestPage";
+
+import NewConsultationForm from "../components/consultation_history/NewConsultationForm";
+
 
 const AppRouter: React.FC = () => {
   return (
@@ -56,7 +60,11 @@ const AppRouter: React.FC = () => {
         <Route path="/patients" element={<PatientDashboard />} />
         <Route path="/patients/archive" element={<PatientDashboard />} />
         <Route path="/patients/patient_details/:patientId" element={<PatientDetails />} />
+        
         <Route path="/patients/patient_details/:patientId/:prescriptionId" element={<PrescriptionPage />} />
+        <Route path="/patients/test_details/:patientId/:testId" element={<TestPage />} />
+
+        <Route path="/patients/patient_details/:patientId/consultation_history" element={<NewConsultationForm />} />
 
         {/* Catch-all route for unmatched paths */}
         <Route path="*" element={<Navigate to="/signin" replace />} />
