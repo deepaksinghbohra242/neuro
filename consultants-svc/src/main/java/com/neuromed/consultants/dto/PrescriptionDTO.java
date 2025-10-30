@@ -1,4 +1,4 @@
-package com.neuromed.pharmarcy.dto;
+package com.neuromed.consultants.dto;
 
 import lombok.*;
 
@@ -18,7 +18,5 @@ public class PrescriptionDTO {
   private Integer noOfMedicines;
   private Integer duration;
   private String preferredService;
-  private String status;
   private UserModel consultantUserModel ;
-  private UserModel patientUserModel ;
 }

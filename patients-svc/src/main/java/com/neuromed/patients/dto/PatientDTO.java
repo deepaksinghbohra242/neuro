@@ -19,4 +19,5 @@ public class PatientDTO {
     private String country;
     private String zipCode;
     private String status;// "archive" or "unarchive"
+    private UserModel patientUserModel;
 }

@@ -1,4 +1,4 @@
-package com.neuromed.pharmarcy.dto;
+package com.neuromed.consultants.dto;
 
 import lombok.Data;
 import java.sql.Timestamp;
@@ -14,7 +14,6 @@ public class PrescriptionDetailDTO {
     private Integer noOfMedicines;
     private Integer duration;
     private String preferredService;
-    private String status;
     private List<PrescriptionMedicineDTO> medicines;
     private UserModel consultantUserModel;
     private UserModel patientUserModel;

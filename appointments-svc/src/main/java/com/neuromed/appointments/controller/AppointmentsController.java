@@ -154,7 +154,7 @@ public class AppointmentsController {
         return ResponseEntity.ok(list);
         }
 
-    @Operation(summary = "List by all Appointments", description = "Fetch all appointment records")
+    @Operation(summary = "List Appointments by Consultant ID", description = "Retrieve all appointments associated with a specific consultant.")
     @GetMapping("/listByConsultantId")
     public ResponseEntity<List<AppointmentDTO>> listAppointmentsByConsultantId(@RequestHeader("neuromed-correlation-id") String correlationId ,@RequestParam("consultantId") Long consultantId) {
         List<AppointmentDTO> list = appointmentService.listAppointmentsByConsultantId(correlationId , consultantId );

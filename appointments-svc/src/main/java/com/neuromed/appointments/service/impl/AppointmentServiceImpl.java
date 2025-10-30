@@ -85,21 +85,12 @@ public class AppointmentServiceImpl implements IAppointmentService {
         if (patientResponse != null && patientResponse.getBody() != null) {
             PatientDetailsDTO patient = patientResponse.getBody();
             detailsDTO.setPatientDetails(patient);
-
-            if (patient.getUserModel() != null) {
-                detailsDTO.setPatientName(patient.getUserModel().getFirstName() + " " +
-                        patient.getUserModel().getLastName());
-            }
         }
         ResponseEntity<ConsultantDetailsDto> consultantResponse =
                 consultantsFeignClient.fetchConsultantDetails(correlationId, appointment.getConsultantId());
         if (consultantResponse != null && consultantResponse.getBody() != null) {
             ConsultantDetailsDto consultant = consultantResponse.getBody();
-
-            if (consultant.getUserModel() != null) {
-                detailsDTO.setConsultantName(consultant.getUserModel().getFirstName() + " " +
-                        consultant.getUserModel().getLastName());
-            }
+            detailsDTO.setConsultantUserModel(consultant.getUserModel());
         }
         return detailsDTO;
     }
