@@ -33,7 +33,12 @@ public class Prescription extends  BaseEntity {
   @Column(name = "no_of_medicines")
   private Integer noOfMedicines;
 
+  @Column(name = "duration")
   private Integer duration;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "status", nullable = false, length = 20)
+  private Status status = Status.NEW;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "preferred_service", length = 20)
@@ -52,5 +57,8 @@ public class Prescription extends  BaseEntity {
     public String getDisplayName() {
       return displayName;
     }
+  }
+  public enum Status {
+    NEW , RETURNED , REJECTED
   }
 }

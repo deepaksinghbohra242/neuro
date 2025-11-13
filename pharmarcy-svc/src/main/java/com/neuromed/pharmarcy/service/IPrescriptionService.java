@@ -68,4 +68,8 @@ public interface IPrescriptionService {
 
 
   PrescriptionDTO reorderPrescription(ReorderRequestDTO dto);
+
+
+  List<PrescriptionDTO> listPrescriptionsByStatus(String correlationId, String status);
 }
+

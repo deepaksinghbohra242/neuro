@@ -152,4 +152,47 @@ public class PrescriptionServiceImpl implements IPrescriptionService {
             .orElseThrow(() -> new ResourceNotFoundException("Prescription", "id", dto.getPrescriptionId().toString()));*/
   return null;
   }
+
+  @Override
+  public List<PrescriptionDTO> listPrescriptionsByStatus(String correlationId, String status) {
+    try {
+      Prescription.Status prescriptionStatus = Prescription.Status.valueOf(status.trim().toUpperCase());
+
+      return prescriptionsRepository.findByStatus(prescriptionStatus)
+              .stream()
+              .map(prescription -> {
+                PrescriptionDTO dto = PrescriptionsMapper.mapToPrescriptionsDTO(prescription);
+
+                try {
+                  ResponseEntity<ConsultantDetailsDto> consultantResponse =
+                          consultantsFeignClient.fetchConsultantDetails(correlationId, prescription.getConsultantId());
+                  ConsultantDetailsDto consultant = consultantResponse.getBody();
+                  if (consultant != null) {
+                    dto.setConsultantUserModel(consultant.getUserModel());
+                  }
+                } catch (Exception e) {
+                  System.err.println("Failed to fetch consultant details for consultantId={} : {}" +  prescription.getConsultantId() + e.getMessage());
+                }
+
+                try {
+                  ResponseEntity<PatientDetailsDTO> patientResponse =
+                          patientFeignClient.fetchPatientDetails(correlationId, prescription.getPatientId());
+                  PatientDetailsDTO patient = patientResponse.getBody();
+                  if (patient != null) {
+                    dto.setPatientUserModel(patient.getUserModel());
+                  }
+                } catch (Exception e) {
+                  System.err.println("Failed to fetch patient details for patientId={} : {}"+ prescription.getPatientId()+ e.getMessage());
+                }
+
+                return dto;
+              })
+              .collect(Collectors.toList());
+
+    } catch (IllegalArgumentException e) {
+      System.err.println("Invalid status provided: {} " + status);
+      throw new RuntimeException("Invalid prescription status: " + status);
+    }
+  }
+
 }

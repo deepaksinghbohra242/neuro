@@ -38,14 +38,24 @@ public class PatientServiceImpl implements IPatientService {
     }
 
     @Override
-    public List<PatientDTO> getPatients() {
+    public List<PatientDTO> getPatients(String correlationId) {
         logger.info("getPatients called");
-        List<PatientDTO> list = patientRepository.findAll()
-                .stream()
-                .map(PatientMapper::mapToPatientDTO)
-                .collect(Collectors.toList());
-        logger.debug("getPatients returning {} patients", list != null ? list.size() : 0);
-        return list;
+
+        List<Patient> patients = patientRepository.findAll();
+
+        return patients.stream().map(patient -> {
+            PatientDTO dto = PatientMapper.mapToPatientDTO(patient);
+            try {
+                ResponseEntity<UserModel> response =
+                        userFeignClient.fetchUserDetails(correlationId, patient.getUserId().toString());
+                dto.setPatientUserModel(response.getBody());
+            } catch (Exception ex) {
+                logger.error("Failed to fetch user details for userId={} : {}",
+                        patient.getUserId(), ex.getMessage());
+                dto.setPatientUserModel(null);
+            }
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -92,11 +102,40 @@ public class PatientServiceImpl implements IPatientService {
         logger.info("fetchPatient called for patientId={} correlationId={}", patientId, correlationId);
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient", "id", String.valueOf(patientId)));
-        ResponseEntity<UserModel> userModelResponseEntity = userFeignClient.fetchUserDetails(correlationId, patient.getUserId().toString());
-        logger.info("fetchPatient fetched patientId={} user={}", patientId, userModelResponseEntity.getBody() != null ? userModelResponseEntity.getBody().getId() : "null");
-        PatientDetailsDTO patientDetailsDTO = getPatientDetailsDTO(patient, userModelResponseEntity);
-        logger.debug("fetchPatient returning details for patientId={}", patientId);
-        return patientDetailsDTO;
+
+       PatientDetailsDTO patientDetailsDTO = new PatientDetailsDTO();
+        ResponseEntity<UserModel> userModel = userFeignClient.fetchUserDetails(correlationId, patient.getUserId().toString());
+       patientDetailsDTO.setUserModel(userModel.getBody());
+       return patientDetailsDTO;
+
+    }
+
+    @Override
+    public List<PatientDTO> getPatientsByStatus(String correlationId, String status) {
+        logger.info("getPatientsByStatus called with status={}", status);
+
+        Patient.Status patientStatus;
+        try {
+            patientStatus = Patient.Status.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            logger.error("Invalid status value: {}", status);
+            throw new ResourceNotFoundException("Patient", "status", status);
+        }
+
+        List<Patient> patients = patientRepository.findByStatus(patientStatus);
+
+        return patients.stream().map(patient -> {
+            PatientDTO dto = PatientMapper.mapToPatientDTO(patient);
+            try {
+                ResponseEntity<UserModel> response =
+                        userFeignClient.fetchUserDetails(correlationId, patient.getUserId().toString());
+                dto.setPatientUserModel(response.getBody());
+            } catch (Exception ex) {
+                logger.error("Failed to fetch user details for userId={} : {}", patient.getUserId(), ex.getMessage());
+                dto.setPatientUserModel(null);
+            }
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     private static PatientDetailsDTO getPatientDetailsDTO(Patient patient, ResponseEntity<UserModel> userModelResponseEntity) {

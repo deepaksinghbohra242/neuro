@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* IBM Plex Sans - Default Font for Entire Website */
+html {
+  font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+}
+
+body {
+  font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+}
+
+/* Ensure all elements inherit IBM Plex Sans */
+*,
+*::before,
+*::after {
+  font-family: inherit;
+}
+
+/* Tailwind utility classes will now use IBM Plex Sans by default */

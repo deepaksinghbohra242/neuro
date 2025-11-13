@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PatientsFallback implements PatientsFeignClient {
     @Override
-    public ResponseEntity<PatientDetailsDTO> fetchPatientDetails(String correlationId, String patientId) {
+    public ResponseEntity<PatientDetailsDTO> fetchPatientDetails(String correlationId, Long patientId) {
         return null;
     }
 }

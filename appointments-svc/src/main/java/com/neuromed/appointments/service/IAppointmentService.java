@@ -1,9 +1,11 @@
 package com.neuromed.appointments.service;
 
-
 import com.neuromed.appointments.dto.AppointmentDTO;
 import com.neuromed.appointments.dto.AppointmentDetailsDTO;
+import com.neuromed.appointments.dto.AppointmentSummaryDTO;
+
 import java.util.List;
+
 /**
  * Service interface for managing appointments.
  * Provides methods for creating, fetching, updating, and deleting appointments.
@@ -49,5 +51,29 @@ public interface IAppointmentService {
      * @return the detailed appointment information
      */
     AppointmentDetailsDTO fetchAppointmentDetails(Long appointmentId, String correlationId);
+
+    /**
+     * Lists all appointments.
+     *
+     * @param correlationId the correlation ID for tracing requests
+     * @return list of appointments
+     */
     List<AppointmentDTO> listAppointments(String correlationId);
+
+    /**
+     * Lists all appointments for a specific consultant.
+     *
+     * @param correlationId the correlation ID for tracing requests
+     * @param consultantId  the consultant ID
+     * @return list of appointments for the consultant
+     */
+    List<AppointmentDTO> listAppointmentsByConsultantId(String correlationId, Long consultantId);
+
+    /**
+     * ✅ Fetches all appointments created today.
+     *
+     * @param correlationId the correlation ID for tracing requests
+     * @return list of summarized appointments created today
+     */
+    List<AppointmentSummaryDTO> getAppointmentsCreatedToday(String correlationId);
 }

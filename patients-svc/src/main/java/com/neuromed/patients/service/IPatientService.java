@@ -23,7 +23,7 @@ public interface IPatientService {
      *
      * @return List of PatientDTOs.
      */
-    List<PatientDTO> getPatients();
+    List<PatientDTO> getPatients(String correlationId);
 
     /**
      * Updates an existing patient record.
@@ -50,4 +50,12 @@ public interface IPatientService {
      * @return The PatientDTO containing patient details.
      */
     PatientDetailsDTO fetchPatient(Long patientId, String correlationId);
+
+    /**
+     * Retrieves all patient records by status .
+     *
+     * @return List of PatientDTOs.
+     */
+    List<PatientDTO> getPatientsByStatus(String correlationId, String status);
+
 }

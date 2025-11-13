@@ -45,8 +45,8 @@ public class PatientController {
                         @ApiResponse(responseCode = "200", description = "List of patients returned")
         })
         @GetMapping("/patients")
-        public ResponseEntity<List<PatientDTO>> getPatients() {
-                return ResponseEntity.ok(patientService.getPatients());
+        public ResponseEntity<List<PatientDTO>> getPatients(@RequestHeader("neuromed-correlation-id") String correlationId) {
+                return ResponseEntity.ok(patientService.getPatients(correlationId));
         }
 
         @Operation(summary = "Update a patient", description = "Updates details of an existing patient")
@@ -115,4 +115,14 @@ public class PatientController {
                 PatientDetailsDTO patientDto = patientService.fetchPatient(patientId, correlationId);
                 return ResponseEntity.status(HttpStatus.OK).body(patientDto);
         }
+
+        @Operation(summary = "Get all patients by status", description = "Retrieves a list of all patients")
+        @ApiResponses({
+                @ApiResponse(responseCode = "200", description = "List of patients returned")
+        })
+        @GetMapping("/patientsByStatus")
+        public ResponseEntity<List<PatientDTO>> getPatientsByStatus(@RequestHeader("neuromed-correlation-id") String correlationId , @RequestParam("status") String status) {
+                return ResponseEntity.ok(patientService.getPatientsByStatus(correlationId , status));
+        }
+
 }

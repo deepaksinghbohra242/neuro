@@ -18,6 +18,7 @@ public class PrescriptionsMapper {
         dto.setDate(prescription.getDate());
         dto.setNoOfMedicines(prescription.getNoOfMedicines());
         dto.setDuration(prescription.getDuration());
+        dto.setStatus(prescription.getStatus() != null ? prescription.getStatus().name() : null);
 
         Prescription.PreferredService service = prescription.getPreferredService();
         dto.setPreferredService(service != null ? service.getDisplayName() : null);
@@ -38,6 +39,16 @@ public class PrescriptionsMapper {
         entity.setDate(prescriptionDTO.getDate());
         entity.setNoOfMedicines(prescriptionDTO.getNoOfMedicines());
         entity.setDuration(prescriptionDTO.getDuration());
+        if (prescriptionDTO.getStatus() != null) {
+            try {
+                entity.setStatus(Prescription.Status.valueOf(prescriptionDTO.getStatus().trim().toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                entity.setStatus(Prescription.Status.NEW);
+            }
+        } else {
+            entity.setStatus(Prescription.Status.NEW);
+        }
+
 
         String preferredServiceStr = prescriptionDTO.getPreferredService();
         if (preferredServiceStr != null) {

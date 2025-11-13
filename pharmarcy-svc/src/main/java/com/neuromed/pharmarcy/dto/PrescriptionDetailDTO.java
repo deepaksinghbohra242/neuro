@@ -14,6 +14,7 @@ public class PrescriptionDetailDTO {
     private Integer noOfMedicines;
     private Integer duration;
     private String preferredService;
+    private String status;
     private List<PrescriptionMedicineDTO> medicines;
     private UserModel consultantUserModel;
     private UserModel patientUserModel;

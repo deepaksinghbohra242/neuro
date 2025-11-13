@@ -18,5 +18,7 @@ public class PrescriptionDTO {
   private Integer noOfMedicines;
   private Integer duration;
   private String preferredService;
+  private String status;
   private UserModel consultantUserModel ;
+  private UserModel patientUserModel ;
 }

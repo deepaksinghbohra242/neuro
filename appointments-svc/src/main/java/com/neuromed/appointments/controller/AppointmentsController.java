@@ -118,7 +118,7 @@ public class AppointmentsController {
     @GetMapping("/fetchAppointmentDetails")
     public ResponseEntity<AppointmentDetailsDTO> fetchAppointmentDetails(
             @RequestHeader("neuromed-correlation-id") String correlationId,
-            @RequestParam Long appointmentId) {
+            @RequestParam("appointmentId") Long appointmentId) {
         AppointmentDetailsDTO detailsDTO = appointmentService.fetchAppointmentDetails(appointmentId, correlationId);
         return ResponseEntity.ok(detailsDTO);
     }
@@ -153,4 +153,19 @@ public class AppointmentsController {
         List<AppointmentDTO> list = appointmentService.listAppointments(correlationId);
         return ResponseEntity.ok(list);
         }
+
+    @Operation(summary = "List Appointments by Consultant ID", description = "Retrieve all appointments associated with a specific consultant.")
+    @GetMapping("/listByConsultantId")
+    public ResponseEntity<List<AppointmentDTO>> listAppointmentsByConsultantId(@RequestHeader("neuromed-correlation-id") String correlationId ,@RequestParam("consultantId") Long consultantId) {
+        List<AppointmentDTO> list = appointmentService.listAppointmentsByConsultantId(correlationId , consultantId );
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/today")
+    @Operation(summary = "Appointments Created Today", description = "Fetch all appointments created today")
+    public ResponseEntity<List<AppointmentSummaryDTO>> getAppointmentsCreatedToday(
+            @RequestHeader("neuromed-correlation-id") String correlationId) {
+        List<AppointmentSummaryDTO> list = appointmentService.getAppointmentsCreatedToday(correlationId);
+        return ResponseEntity.ok(list);
+    }
 }

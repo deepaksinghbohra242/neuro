@@ -12,6 +12,5 @@ public interface PatientsFeignClient {
 
     @GetMapping(value = "/api/fetch",consumes = "application/json")
     public ResponseEntity<PatientDetailsDTO> fetchPatientDetails(@RequestHeader("neuromed-correlation-id")
-                                                     String correlationId, @RequestParam("patientId") String patientId);
-
+                                                     String correlationId, @RequestParam("patientId") Long patientId);
 }

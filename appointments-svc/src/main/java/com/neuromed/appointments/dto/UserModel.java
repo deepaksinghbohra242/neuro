@@ -33,5 +33,4 @@ public class UserModel {
 	
 	private Long age = 0L;
 
-
 }

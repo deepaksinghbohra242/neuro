@@ -10,6 +10,9 @@ import lombok.Data;
 )
 public class AppointmentDetailsDTO {
 
+    @Schema(description = "Consultant User Model")
+    private UserModel consultantUserModel;
+
     @Schema(
             description = "ID of the appointment",
             example = "123"

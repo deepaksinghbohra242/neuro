@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `patient` (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
-    phone_number VARCHAR(20) NOT NULL,
+    phone_number VARCHAR(20),
     date_of_birth DATE DEFAULT NULL,
     occupation VARCHAR(100) DEFAULT NULL,
     nationality VARCHAR(50) DEFAULT NULL,
