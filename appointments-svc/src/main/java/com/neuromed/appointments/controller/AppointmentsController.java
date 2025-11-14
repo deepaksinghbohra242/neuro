@@ -160,4 +160,12 @@ public class AppointmentsController {
         List<AppointmentDTO> list = appointmentService.listAppointmentsByConsultantId(correlationId , consultantId );
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/today")
+    @Operation(summary = "Appointments Created Today", description = "Fetch all appointments created today")
+    public ResponseEntity<List<AppointmentSummaryDTO>> getAppointmentsCreatedToday(
+            @RequestHeader("neuromed-correlation-id") String correlationId) {
+        List<AppointmentSummaryDTO> list = appointmentService.getAppointmentsCreatedToday(correlationId);
+        return ResponseEntity.ok(list);
+    }
 }

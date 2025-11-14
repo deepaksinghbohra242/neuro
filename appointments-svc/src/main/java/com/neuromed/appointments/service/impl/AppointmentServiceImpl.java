@@ -12,12 +12,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class AppointmentServiceImpl implements IAppointmentService {
-
 
     private AppointmentRepository appointmentRepository;
     private PatientsFeignClient patientsFeignClient;
@@ -94,6 +97,48 @@ public class AppointmentServiceImpl implements IAppointmentService {
         }
         return detailsDTO;
     }
+
+    @Override
+    public List<AppointmentSummaryDTO> getAppointmentsCreatedToday(String correlationId) {
+        // Get start and end of today
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = LocalDate.now().atTime(LocalTime.MAX);
+
+        List<Appointment> appointments = appointmentRepository.findAppointmentsCreatedToday(startOfDay, endOfDay);
+
+        // Map each appointment to summary DTO
+        return appointments.stream().map(appointment -> {
+            AppointmentSummaryDTO summary = new AppointmentSummaryDTO();
+            summary.setId(appointment.getId());
+            summary.setDate(appointment.getDate());
+            summary.setVisitType(appointment.getVisitType());
+            summary.setDuration(appointment.getDuration());
+
+
+            ResponseEntity<PatientDetailsDTO> patientResponse =
+                    patientsFeignClient.fetchPatientDetails(correlationId, appointment.getPatientId());
+            if (patientResponse != null && patientResponse.getBody() != null) {
+                UserModel patientUser = patientResponse.getBody().getUserModel();
+                if (patientUser != null) {
+                    summary.setPatientName(patientUser.getFirstName() + " " + patientUser.getLastName());
+                }
+            }
+
+
+            ResponseEntity<ConsultantDetailsDto> consultantResponse =
+                    consultantsFeignClient.fetchConsultantDetails(correlationId, appointment.getConsultantId());
+            if (consultantResponse != null && consultantResponse.getBody() != null) {
+                UserModel doctorUser = consultantResponse.getBody().getUserModel();
+                if (doctorUser != null) {
+                    summary.setDoctorName(doctorUser.getFirstName() + " " + doctorUser.getLastName());
+                }
+            }
+
+            return summary;
+        }).toList();
+    }
+
+
 
     @Override
     public List<AppointmentDTO> listAppointments(String correlationId) {
